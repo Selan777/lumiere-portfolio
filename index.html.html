@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lumière — Fashion eCommerce UX Concept</title>
+  <meta name="description" content="Portfolio landing page for a fashion eCommerce UX/UI concept: homepage, catalog, product page, cart, and checkout.">
+  <meta name="theme-color" content="#f7f1ec">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #f7f1ec;
+  --surface: rgba(255,255,255,0.58);
+  --surface-strong: rgba(255,255,255,0.9);
+  --text: #201a17;
+  --muted: #6f625b;
+  --line: rgba(232,217,207,0.82);
+  --accent: #241b17;
+  --accent-soft: #f1ddd1;
+  --gold: #b99074;
+  --shadow: 0 24px 60px rgba(73, 46, 35, 0.10);
+  --shadow-strong: 0 36px 80px rgba(73, 46, 35, 0.14);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.95), transparent 28%),
+    radial-gradient(circle at 90% 10%, rgba(241,221,209,0.85), transparent 24%),
+    linear-gradient(180deg, #f8f3ef 0%, #f4ede7 30%, #f8f7f4 100%);
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+
+.page-noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image:
+    radial-gradient(circle at 20% 20%, #000 0.5px, transparent 0.5px),
+    radial-gradient(circle at 80% 40%, #000 0.5px, transparent 0.5px),
+    radial-gradient(circle at 40% 80%, #000 0.5px, transparent 0.5px);
+  background-size: 18px 18px, 26px 26px, 22px 22px;
+  z-index: 1;
+}
+
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(248,243,239,0.72);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(232,217,207,0.8);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 76px;
+}
+
+.brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.nav {
+  display: flex;
+  gap: 28px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.nav a {
+  position: relative;
+}
+
+.nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
+}
+
+.nav a:hover::after {
+  transform: scaleX(1);
+}
+
+.header-cta,
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 14px 22px;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+  will-change: transform;
+}
+
+.header-cta,
+.btn-primary {
+  background: linear-gradient(135deg, #241b17 0%, #3a2a23 100%);
+  color: #fff;
+  box-shadow: 0 16px 30px rgba(36, 27, 23, 0.18);
+}
+
+.btn-secondary {
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.65);
+  color: var(--text);
+}
+
+.btn:hover,
+.header-cta:hover {
+  box-shadow: var(--shadow-strong);
+}
+
+.section-divider {
+  position: relative;
+}
+
+.section-divider::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: min(1180px, calc(100% - 48px));
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent 0%, rgba(185,144,116,0.45) 50%, transparent 100%);
+}
+
+.hero {
+  padding: 72px 0 56px;
+  position: relative;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(8px);
+  opacity: 0.45;
+  animation: floatOrb 12s ease-in-out infinite;
+}
+
+.orb-1 {
+  width: 220px;
+  height: 220px;
+  right: 8%;
+  top: 12%;
+  background: radial-gradient(circle, rgba(241,221,209,0.9), rgba(241,221,209,0));
+}
+
+.orb-2 {
+  width: 160px;
+  height: 160px;
+  left: 10%;
+  bottom: 8%;
+  background: radial-gradient(circle, rgba(185,144,116,0.35), rgba(185,144,116,0));
+  animation-delay: -4s;
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-18px); }
+}
+
+.eyebrow {
+  display: inline-flex;
+  margin-bottom: 18px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #8e7265;
+  background: rgba(255,255,255,0.5);
+}
+
+.hero h1,
+.section-head h2,
+.detail-copy h3,
+.checkout-step h3,
+.mobile-grid h2,
+.catalog-toolbar h3 {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.hero h1 {
+  margin: 0 0 20px;
+  font-size: clamp(3.8rem, 7vw, 6.8rem);
+  line-height: 0.92;
+  font-weight: 700;
+}
+
+.hero h1 span {
+  color: #8c6555;
+}
+
+.hero-text,
+.section-head p,
+.feature-card p,
+.state-card p,
+.detail-copy p,
+.checkout-step p,
+.mobile-grid p,
+.site-footer p,
+.catalog-toolbar p,
+.product-card p,
+.hero-card-body p {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.hero-footnote {
+  margin-top: 18px;
+  color: #927a6e;
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.glass-panel,
+.hero-card,
+.feature-card,
+.filters-card,
+.product-card,
+.product-detail,
+.state-card,
+.phone-screen,
+.checkout-step {
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,0.65);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.hero-card {
+  border-radius: 32px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.hero-card-image,
+.detail-image,
+.product-image,
+.phone-product {
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-card-image {
+  min-height: 430px;
+  background:
+    linear-gradient(rgba(0,0,0,0.06), rgba(0,0,0,0.06)),
+    url('https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1200&q=80') center/cover;
+}
+
+.hero-card-body {
+  padding: 24px;
+}
+
+.hero-card-top {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.pill {
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  color: #815f51;
+  background: #f7e8df;
+}
+
+.hero-card-body h2,
+.section-head h2,
+.mobile-grid h2 {
+  margin: 0 0 12px;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: 1;
+}
+
+.hero-meta,
+.detail-meta,
+.states-grid,
+.features-grid,
+.checkout-grid {
+  display: grid;
+}
+
+.hero-meta {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.hero-meta div,
+.detail-meta div {
+  padding: 16px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.72);
+}
+
+.hero-meta strong,
+.detail-meta strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 1.15rem;
+}
+
+.hero-meta span,
+.detail-meta span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.section {
+  padding: 88px 0;
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 24px;
+  align-items: end;
+  margin-bottom: 36px;
+}
+
+.features-grid {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.feature-card,
+.state-card,
+.checkout-step {
+  border-radius: 28px;
+  padding: 28px;
+}
+
+.feature-card h3,
+.state-card h3 {
+  margin: 0 0 12px;
+  font-size: 1.3rem;
+}
+
+.showcase {
+  background: linear-gradient(180deg, rgba(255,255,255,0.22), rgba(255,255,255,0));
+}
+
+.catalog-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+}
+
+.filters-card {
+  border-radius: 28px;
+  padding: 24px;
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+
+.filters-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.filter-group {
+  margin-bottom: 22px;
+}
+
+.filter-group span {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.chips,
+.colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor: default;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(73, 46, 35, 0.08);
+}
+
+.chip.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.color {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px rgba(32, 26, 23, 0.15);
+  transition: transform .2s ease;
+}
+
+.color:hover {
+  transform: scale(1.08);
+}
+
+.color.active {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.full { width: 100%; }
+
+.catalog-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.catalog-toolbar h3 {
+  margin: 0 0 6px;
+  font-size: 2rem;
+}
+
+.mobile-filters {
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.8);
+  border-radius: 999px;
+  padding: 12px 16px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  border-radius: 28px;
+  padding: 16px;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.product-card h4 {
+  margin: 16px 0 8px;
+  font-size: 1.1rem;
+}
+
+.product-image {
+  min-height: 320px;
+  border-radius: 20px;
+}
+
+.image-1 { background-image: url('https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80'); }
+.image-2 { background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80'); }
+.image-3 { background-image: url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80'); }
+.image-4 { background-image: url('https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=80'); }
+.image-5 { background-image: url('https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80'); }
+.image-6 { background-image: url('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=900&q=80'); }
+
+.product-detail {
+  display: grid;
+  grid-template-columns: 1fr 0.92fr;
+  gap: 28px;
+  border-radius: 36px;
+  padding: 24px;
+}
+
+.detail-image {
+  min-height: 560px;
+  border-radius: 28px;
+  background:
+    linear-gradient(rgba(0,0,0,0.03), rgba(0,0,0,0.03)),
+    url('https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=80') center/cover;
+}
+
+.detail-copy {
+  padding: 16px 8px 16px 0;
+}
+
+.detail-label {
+  color: #8c6555;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: 0.82rem;
+}
+
+.detail-copy h3 {
+  margin: 16px 0 8px;
+  font-size: 3.6rem;
+  line-height: 0.95;
+}
+
+.price {
+  margin-bottom: 18px;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.detail-meta {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.states {
+  background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,0.32));
+}
+
+.states-grid,
+.checkout-grid {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.mobile-grid {
+  display: grid;
+  grid-template-columns: 0.95fr 0.85fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.mobile-points {
+  margin: 22px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+.phone-mockup {
+  display: flex;
+  justify-content: center;
+}
+
+.phone-screen {
+  width: 320px;
+  border-radius: 36px;
+  padding: 18px;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.phone-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.phone-top button {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 999px;
+  padding: 8px 12px;
+}
+
+.phone-product {
+  height: 220px;
+  border-radius: 24px;
+  background-image: url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80');
+  margin-bottom: 14px;
+}
+
+.phone-product.small {
+  height: 160px;
+  background-image: url('https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=800&q=80');
+}
+
+.drawer-preview {
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 24px;
+  background: #1f1815;
+  color: #fff;
+}
+
+.drawer-preview strong {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.checkout-step span {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: #8c6555;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: 0.8rem;
+}
+
+.checkout-step h3 {
+  margin: 0 0 14px;
+  font-size: 2.2rem;
+}
+
+.site-footer {
+  padding: 28px 0 40px;
+  border-top: 1px solid rgba(232,217,207,0.8);
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-strong);
+}
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -140%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform: skewX(-18deg);
+  animation: shimmer 6s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -140%; }
+  45% { left: 160%; }
+  100% { left: 160%; }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-orb,
+  .shimmer::after,
+  .reveal,
+  .hover-lift,
+  .tilt-card,
+  .magnetic,
+  .btn,
+  .header-cta {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 1080px) {
+  .hero-grid,
+  .section-head,
+  .catalog-layout,
+  .product-detail,
+  .mobile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .features-grid,
+  .states-grid,
+  .checkout-grid,
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .filters-card {
+    position: static;
+  }
+}
+
+@media (max-width: 760px) {
+  .container {
+    width: min(100% - 32px, 1180px);
+  }
+
+  .header-inner {
+    min-height: auto;
+    padding: 16px 0;
+    flex-wrap: wrap;
+  }
+
+  .nav {
+    order: 3;
+    width: 100%;
+    overflow: auto;
+    gap: 18px;
+    font-size: 0.9rem;
+    padding-bottom: 4px;
+  }
+
+  .hero,
+  .section {
+    padding: 64px 0;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.1rem, 14vw, 4.6rem);
+  }
+
+  .hero-meta,
+  .detail-meta,
+  .features-grid,
+  .states-grid,
+  .checkout-grid,
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .product-image {
+    min-height: 260px;
+  }
+
+  .detail-image {
+    min-height: 380px;
+  }
+
+  .detail-copy h3,
+  .section-head h2,
+  .mobile-grid h2 {
+    font-size: 2.8rem;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="page-noise"></div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#hero" class="brand">LUMIÈRE</a>
+      <nav class="nav">
+        <a href="#about">About</a>
+        <a href="#catalog">Catalog</a>
+        <a href="#states">States</a>
+        <a href="#mobile">Mobile UX</a>
+      </nav>
+      <a href="#checkout" class="header-cta magnetic">Checkout flow</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero section-divider" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">Portfolio case / fashion eCommerce</div>
+          <h1>Product page, catalog, and cart for a fashion brand focused on <span>minimizing clicks to purchase</span></h1>
+          <p class="hero-text">
+            A UX/UI concept for small and medium-sized businesses moving fashion sales online.
+            The focus is on large imagery, a clear catalog grid, fast CTAs, and intuitive interface states.
+          </p>
+          <div class="hero-actions">
+            <a href="#catalog" class="btn btn-primary magnetic">View screens</a>
+            <a href="#about" class="btn btn-secondary">Solution breakdown</a>
+          </div>
+          <div class="hero-footnote">Art direction · UX strategy · responsive layout · checkout optimization</div>
+        </div>
+        <div class="hero-card reveal tilt-card">
+          <div class="hero-card-image shimmer"></div>
+          <div class="hero-card-body glass-panel">
+            <div class="hero-card-top">
+              <span class="pill">Fashion aesthetic</span>
+              <span class="pill">Responsive</span>
+            </div>
+            <h2>Lumière Essential Dress</h2>
+            <p>Large imagery, fast option selection, a prominent CTA, and a direct path to the cart.</p>
+            <div class="hero-meta">
+              <div><strong>1–2</strong><span>steps to checkout</span></div>
+              <div><strong>4</strong><span>key interface states</span></div>
+              <div><strong>Mobile</strong><span>filter drawer</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-orb orb-1"></div>
+      <div class="hero-orb orb-2"></div>
+    </section>
+
+    <section class="section section-divider" id="about">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">About the project</div>
+            <h2>What this landing page solves</h2>
+          </div>
+          <p>
+            This is not just a promo page, but a portfolio case that visualizes the key screens of an online store:
+            the homepage, catalog, product page, cart, and a two-step checkout.
+          </p>
+        </div>
+        <div class="features-grid">
+          <article class="feature-card reveal hover-lift glass-panel">
+            <h3>Fast path to purchase</h3>
+            <p>The flow is designed so the user moves from browsing to adding to cart as quickly as possible.</p>
+          </article>
+          <article class="feature-card reveal hover-lift glass-panel">
+            <h3>Fashion-first visual language</h3>
+            <p>Large images, airy composition, soft typography, and a premium palette tailored to fashion.</p>
+          </article>
+          <article class="feature-card reveal hover-lift glass-panel">
+            <h3>Interface states</h3>
+            <p>Empty cart, no results, and success states are planned so the product feels complete, not just beautiful.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section showcase section-divider" id="catalog">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Catalog and grid</div>
+            <h2>Product listing with filters</h2>
+          </div>
+          <p>Filters on the left, a clean catalog grid on the right. On mobile, filters move into a drawer so the screen stays uncluttered.</p>
+        </div>
+        <div class="catalog-layout">
+          <aside class="filters-card reveal glass-panel hover-lift">
+            <div class="filters-title">Filters</div>
+            <div class="filter-group">
+              <span>Category</span>
+              <div class="chips">
+                <button class="chip active">Dresses</button>
+                <button class="chip">Tailoring</button>
+                <button class="chip">Knitwear</button>
+              </div>
+            </div>
+            <div class="filter-group">
+              <span>Size</span>
+              <div class="chips">
+                <button class="chip">XS</button>
+                <button class="chip active">S</button>
+                <button class="chip">M</button>
+                <button class="chip">L</button>
+              </div>
+            </div>
+            <div class="filter-group">
+              <span>Color</span>
+              <div class="colors">
+                <i class="color active" style="background:#1e1e20"></i>
+                <i class="color" style="background:#b87882"></i>
+                <i class="color" style="background:#d8c7b2"></i>
+                <i class="color" style="background:#d9d9d9"></i>
+              </div>
+            </div>
+            <button class="btn btn-primary full magnetic">Show products</button>
+          </aside>
+          <div class="catalog-content">
+            <div class="catalog-toolbar reveal">
+              <div>
+                <h3>New Arrivals</h3>
+                <p>48 products · 3 columns · fast comparison and selection</p>
+              </div>
+              <button class="mobile-filters">Mobile filters</button>
+            </div>
+            <div class="product-grid">
+              <article class="product-card reveal hover-lift tilt-card">
+                <div class="product-image image-1 shimmer"></div>
+                <h4>Essential Dress</h4>
+                <p>From 7 990 ₽</p>
+              </article>
+              <article class="product-card reveal hover-lift tilt-card">
+                <div class="product-image image-2 shimmer"></div>
+                <h4>Soft Tailored Set</h4>
+                <p>From 11 490 ₽</p>
+              </article>
+              <article class="product-card reveal hover-lift tilt-card">
+                <div class="product-image image-3 shimmer"></div>
+                <h4>Cashmere Knit</h4>
+                <p>From 8 490 ₽</p>
+              </article>
+              <article class="product-card reveal hover-lift tilt-card">
+                <div class="product-image image-4 shimmer"></div>
+                <h4>Evening Slip</h4>
+                <p>From 9 990 ₽</p>
+              </article>
+              <article class="product-card reveal hover-lift tilt-card">
+                <div class="product-image image-5 shimmer"></div>
+                <h4>Structured Blazer</h4>
+                <p>From 12 990 ₽</p>
+              </article>
+              <article class="product-card reveal hover-lift tilt-card">
+                <div class="product-image image-6 shimmer"></div>
+                <h4>Minimal Shirt</h4>
+                <p>From 6 490 ₽</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-divider" id="product">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Product page</div>
+            <h2>Large imagery and clear CTAs</h2>
+          </div>
+          <p>The product page should quickly answer 3 questions: what the product looks like, how much it costs, and how to buy it right now.</p>
+        </div>
+        <div class="product-detail reveal glass-panel">
+          <div class="detail-image shimmer"></div>
+          <div class="detail-copy">
+            <span class="detail-label">Featured product</span>
+            <h3>Lumière Essential Dress</h3>
+            <div class="price">7 990 ₽</div>
+            <p>
+              Focused on premium photography, concise copy, sizing, and two action paths:
+              add to cart and buy in 1 click.
+            </p>
+            <div class="detail-meta">
+              <div><strong>S–L</strong><span>Sizes</span></div>
+              <div><strong>24h</strong><span>Shipping</span></div>
+              <div><strong>4.8/5</strong><span>Rating</span></div>
+            </div>
+            <div class="hero-actions">
+              <button class="btn btn-primary magnetic">Buy in 1 click</button>
+              <button class="btn btn-secondary">Add to cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section states section-divider" id="states">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Interface states</div>
+            <h2>Not just beautiful screens, but real UX scenarios</h2>
+          </div>
+          <p>For a portfolio case, it is important to show that the design is thought through beyond the first screen and accounts for real user situations.</p>
+        </div>
+        <div class="states-grid">
+          <article class="state-card reveal hover-lift glass-panel">
+            <h3>Empty cart</h3>
+            <p>The user gets a clear message and a quick way back to the catalog without reaching a dead end in the flow.</p>
+          </article>
+          <article class="state-card reveal hover-lift glass-panel">
+            <h3>No products found</h3>
+            <p>If the filters return no results, the interface explains the situation and suggests adjusting the selection.</p>
+          </article>
+          <article class="state-card reveal hover-lift glass-panel">
+            <h3>Successful order</h3>
+            <p>After the order is confirmed, the user sees a calm success state with guidance on the next step.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section mobile section-divider" id="mobile">
+      <div class="container mobile-grid">
+        <div class="reveal">
+          <div class="eyebrow">Mobile UX</div>
+          <h2>Filters stay out of the way while browsing the catalog</h2>
+          <p>
+            On mobile, filters open in a separate drawer layer. This keeps the focus on product cards
+            without overloading the first screen with interface controls.
+          </p>
+          <ul class="mobile-points">
+            <li>drawer-based filters</li>
+            <li>single-column catalog grid</li>
+            <li>large tap targets</li>
+          </ul>
+        </div>
+        <div class="phone-mockup reveal">
+          <div class="phone-screen glass-panel tilt-card">
+            <div class="phone-top">
+              <span>Catalog</span>
+              <button>Filters</button>
+            </div>
+            <div class="phone-product shimmer"></div>
+            <div class="phone-product small shimmer"></div>
+            <div class="drawer-preview">
+              <strong>Filters</strong>
+              <span>Category · Size · Color</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section checkout" id="checkout">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <div class="eyebrow">Checkout flow</div>
+            <h2>Checkout in 2 steps</h2>
+          </div>
+          <p>Only the necessary fields: contact details, delivery, and final confirmation. No unnecessary intermediate steps.</p>
+        </div>
+        <div class="checkout-grid">
+          <article class="checkout-step reveal hover-lift glass-panel">
+            <span>Step 1</span>
+            <h3>Contact and delivery</h3>
+            <p>Name, phone, email, address, and delivery method. The flow is structured so the user can finish entering details quickly.</p>
+          </article>
+          <article class="checkout-step reveal hover-lift glass-panel">
+            <span>Step 2</span>
+            <h3>Order confirmation</h3>
+            <p>Order summary, cart contents, and a large final confirmation button.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>Lumière</strong>
+        <p>UX/UI concept for a fashion eCommerce portfolio</p>
+      </div>
+      <a href="#hero">Back to top</a>
+    </div>
+  </footer>
+
+  <script>
+const revealItems = document.querySelectorAll('.reveal');
+const tiltCards = document.querySelectorAll('.tilt-card');
+const magneticButtons = document.querySelectorAll('.magnetic');
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.16 });
+
+revealItems.forEach((item) => revealObserver.observe(item));
+
+tiltCards.forEach((card) => {
+  card.addEventListener('mousemove', (event) => {
+    const rect = card.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateY = ((x - centerX) / centerX) * 6;
+    const rotateX = ((centerY - y) / centerY) * 6;
+
+    card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+magneticButtons.forEach((button) => {
+  button.addEventListener('mousemove', (event) => {
+    const rect = button.getBoundingClientRect();
+    const x = event.clientX - rect.left - rect.width / 2;
+    const y = event.clientY - rect.top - rect.height / 2;
+
+    button.style.transform = `translate(${x * 0.08}px, ${y * 0.16}px)`;
+  });
+
+  button.addEventListener('mouseleave', () => {
+    button.style.transform = '';
+  });
+});
+
+const currentHash = window.location.hash;
+if (currentHash) {
+  const target = document.querySelector(currentHash);
+  if (target) {
+    setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+  }
+}
+  </script>
+</body>
+</html>
